@@ -1,0 +1,9 @@
+curl -X DELETE http://localhost:5001/delete_user \
+     -H "Content-Type: application/json" \
+     -d '{"username": "smcgonagle"}'
+
+sleep 5s
+
+curl -X DELETE http://localhost:5001/delete_user \
+     -H "Content-Type: application/json" \
+     -d '{"username": "smcgonagle"}'

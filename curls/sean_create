@@ -1,0 +1,11 @@
+#!/bin/bash
+curl -X POST http://localhost:5001/create_user \
+     -H "Content-Type: application/json" \
+     -d '{"username": "smcgonagle", "email": "smcgonagle@email.com", "password": "password123"}'
+
+sleep 5s
+
+curl -X GET http://localhost:5001/get_user \
+     -H "Content-Type: application/json" \
+     -d '{"username": "smcgonagle"}'
+
