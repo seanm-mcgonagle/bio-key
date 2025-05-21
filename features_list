@@ -11,4 +11,4 @@ Improvements to make if moving to prod:
 - Use production webserver like nginx
 - Use production sql db such as postgres
   - sqlite only has 1 writer at a time, so not good for multiple users
-  - sqlite can handle large data, but not always practicle
+  - sqlite can handle large data, but not always practical
