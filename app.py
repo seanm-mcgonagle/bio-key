@@ -16,7 +16,7 @@ def create_user():
     Create a new user in the database.
     Requires username, password, and email in the request body.
     """    
-    # Get the request data, check presence and validity
+    # Get the request data, check presense and validate it
     data = request.get_json()
     if not data:
         return jsonify({"message": "Bad Request"}), 400
@@ -25,6 +25,8 @@ def create_user():
         password = data["password"]
         email = data["email"]
     except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str) or not isinstance(password, str) or not isinstance(email, str):
         return jsonify({"message": "Bad Request"}), 400
 
     # Check if user already exists, return 400 if it does
@@ -65,6 +67,8 @@ def get_user():
         username = data["username"]
     except KeyError:
         return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str):
+        return jsonify({"message": "Bad Request"}), 400
 
     # Get user details from the database
     user = db.get_user(username)
@@ -96,6 +100,8 @@ def update_user():
         email = data["email"]
     except KeyError:
         return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str) or not isinstance(password, str) or not isinstance(email, str):
+        return jsonify({"message": "Bad Request"}), 400
     
     # If user doesn't exists, return 404, otherwise update the user
     existing_user = db.get_username(username)
@@ -125,6 +131,8 @@ def delete_user():
     try:
         username = data["username"]
     except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str):
         return jsonify({"message": "Bad Request"}), 400
 
     # Return 404 if username is not found

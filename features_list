@@ -1,0 +1,14 @@
+Improvements to make in general
+- password hashing (cryptographically secure one-way hash), salting, peppering
+  - bcrypt would be a good option
+- logging is pretty essential even for dev
+- reduce number of sql queries? e.g. db.create_user() then new_user = db.get_user(username)... either return success from first
+	db query or return data
+- create helper functions to get rid of repeated logic/validation
+- email validation: https://pypi.org/project/email-validator/
+
+Improvements to make if moving to prod:
+- Use production webserver like nginx
+- Use production sql db such as postgres
+  - sqlite only has 1 writer at a time, so not good for multiple users
+  - sqlite can handle large data, but not always practicle
