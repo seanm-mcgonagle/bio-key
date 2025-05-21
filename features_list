@@ -12,3 +12,4 @@ Improvements to make if moving to prod:
 - Use production sql db such as postgres
   - sqlite only has 1 writer at a time, so not good for multiple users
   - sqlite can handle large data, but not always practical
+- simplify db queries as they grow in number with something like https://www.sqlalchemy.org/

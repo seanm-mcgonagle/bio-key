@@ -8,7 +8,7 @@ def health_check():
     """
     Basic health check
     """
-    return jsonify({"message": "LGTM!!!"}), 200
+    return jsonify({"message": "Healthcheck pass"}), 200
 
 @app.route("/user", methods=["POST"])
 def create_user():
