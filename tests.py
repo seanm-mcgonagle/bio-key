@@ -8,6 +8,32 @@ class TestUser(unittest.TestCase):
         db.clear_database()  # Clear the database before each test
         db.create_table()
 
+    def test_delete_user_success(self):
+        """
+        Test deleting a user successfully.
+        """
+        url = f"{self.base_url}/user"
+        data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testemail"
+        }
+        # First create the user
+        requests.post(url, json=data)
+
+        # Now delete the user
+        delete_data = {
+            "username": "testuser"
+        }
+        response = requests.delete(url, json=delete_data)
+        self.assertEqual(response.status_code, 200)
+        # Check if the user is actually deleted
+        get_data = {
+            "username": "testuser"
+        }
+        get_response = requests.get(url, json=get_data)
+        self.assertEqual(get_response.status_code, 404)
+
     def test_create_user_success(self):
         """
         Test creating a user successfully.
@@ -20,15 +46,6 @@ class TestUser(unittest.TestCase):
         }
         response = requests.post(url, json=data)
         self.assertEqual(response.status_code, 201)
-
-        # Delete the user after test
-        delete_url = f"{self.base_url}/user"
-        delete_data = {
-            "username": "testuser"
-        }
-        fail_message = "Failed to delete user after test"
-        delete_response = requests.delete(delete_url, json=delete_data)
-        self.assertEqual(delete_response.status_code, 200, fail_message)
 
     def test_create_user_no_data(self):
         """
@@ -77,14 +94,6 @@ class TestUser(unittest.TestCase):
         response = requests.post(url, json=data)
         self.assertEqual(response.status_code, 400)
 
-        # Clean up by deleting the first user
-        delete_url = f"{self.base_url}/user"
-        delete_data = {
-            "username": "testuser1"
-        }
-        delete_response = requests.delete(delete_url, json=delete_data)
-        self.assertEqual(delete_response.status_code, 200)
-
     def test_create_user_already_exists(self):
         """
         Test creating a user that already exists.
@@ -99,14 +108,6 @@ class TestUser(unittest.TestCase):
         requests.post(url, json=data)
         response = requests.post(url, json=data)
         self.assertEqual(response.status_code, 400)
-
-        # Clean up by deleting the user
-        delete_url = f"{self.base_url}/user"
-        delete_data = {
-            "username": "existinguser"
-        }
-        delete_response = requests.delete(delete_url, json=delete_data)
-        self.assertEqual(delete_response.status_code, 200)
 
     def test_update_user_success(self):
         """
@@ -129,14 +130,6 @@ class TestUser(unittest.TestCase):
         }
         response = requests.put(url, json=update_data)
         self.assertEqual(response.status_code, 200)
-
-        # Clean up by deleting the user
-        delete_url = f"{self.base_url}/user"
-        delete_data = {
-            "username": "testuser"
-        }
-        delete_response = requests.delete(delete_url, json=delete_data)
-        self.assertEqual(delete_response.status_code, 200)
 
     def test_update_user_not_found(self):
         """
@@ -178,14 +171,6 @@ class TestUser(unittest.TestCase):
         }
         response = requests.get(url, json=get_data)
         self.assertEqual(response.status_code, 200)
-
-        # Clean up by deleting the user
-        delete_url = f"{self.base_url}/user"
-        delete_data = {
-            "username": "testuser"
-        }
-        delete_response = requests.delete(delete_url, json=delete_data)
-        self.assertEqual(delete_response.status_code, 200)
 
 if __name__ == "__main__":
     unittest.main()
