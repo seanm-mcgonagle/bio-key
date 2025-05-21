@@ -5,4 +5,3 @@
 #docker run -p 5001:5001 -v $PWD:/app my-app
 
 docker compose up -d
-
