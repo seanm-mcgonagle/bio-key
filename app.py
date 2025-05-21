@@ -16,7 +16,7 @@ def create_user():
     Create a new user in the database.
     Requires username, password, and email in the request body.
     """    
-    # Get the request data, check presence and validity
+    # Get the request data, check presense and validate it
     data = request.get_json()
     if not data:
         return jsonify({"message": "Bad Request"}), 400
@@ -25,6 +25,8 @@ def create_user():
         password = data["password"]
         email = data["email"]
     except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str) or not isinstance(password, str) or not isinstance(email, str):
         return jsonify({"message": "Bad Request"}), 400
 
     # Check if user already exists, return 400 if it does
@@ -54,6 +56,8 @@ def get_user():
     """
     Get user details from the database.
     Requires username in the request body to match an existing user in the database.
+    Having an API endopint like this is obviously not a good practice, 
+    but it's just for the sake of the exercise.
     """
     # get the request data, check if it's present
     data = request.get_json()
@@ -64,6 +68,8 @@ def get_user():
     try:
         username = data["username"]
     except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str):
         return jsonify({"message": "Bad Request"}), 400
 
     # Get user details from the database
@@ -96,6 +102,8 @@ def update_user():
         email = data["email"]
     except KeyError:
         return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str) or not isinstance(password, str) or not isinstance(email, str):
+        return jsonify({"message": "Bad Request"}), 400
     
     # If user doesn't exists, return 404, otherwise update the user
     existing_user = db.get_username(username)
@@ -116,7 +124,12 @@ def update_user():
         return jsonify({"message": "User updated successfully"}), 200
 
 @app.route("/user", methods=["DELETE"])
-def delete_user(): 
+def delete_user():
+    """
+    Delete a user from the database.
+    Requires username in the request body to match an existing user in the database.
+    This is also bad practice, but it's just for the sake of the exercise.
+    """
     data = request.get_json()
     if not data:
         return jsonify({"message": "Bad Request"}), 400
@@ -125,6 +138,8 @@ def delete_user():
     try:
         username = data["username"]
     except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if not isinstance(username, str):
         return jsonify({"message": "Bad Request"}), 400
 
     # Return 404 if username is not found
