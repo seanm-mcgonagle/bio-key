@@ -8,4 +8,3 @@ Directory Structure
 - db.py: contains the sqlite3 database server code
 - curls: directory containing some curl commands used during initial manual testing
 - requirements.txt, Dockerfile, docker-compose.yml, .github/workflow/build.yml etc are self explanatory
-
