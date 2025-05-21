@@ -56,6 +56,8 @@ def get_user():
     """
     Get user details from the database.
     Requires username in the request body to match an existing user in the database.
+    Having an API endopint like this is obviously not a good practice, 
+    but it's just for the sake of the exercise.
     """
     # get the request data, check if it's present
     data = request.get_json()
@@ -122,7 +124,12 @@ def update_user():
         return jsonify({"message": "User updated successfully"}), 200
 
 @app.route("/user", methods=["DELETE"])
-def delete_user(): 
+def delete_user():
+    """
+    Delete a user from the database.
+    Requires username in the request body to match an existing user in the database.
+    This is also bad practice, but it's just for the sake of the exercise.
+    """
     data = request.get_json()
     if not data:
         return jsonify({"message": "Bad Request"}), 400
